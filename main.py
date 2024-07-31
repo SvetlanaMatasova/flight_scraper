@@ -362,7 +362,7 @@ def create_test_file():
     print(f'Creating file at: {file_path}')  # Отладочный вывод
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write('This is a test file created by GitHub Actions\n')
-       
+
 
 
 
@@ -372,7 +372,7 @@ def create_test_file():
 current_time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 
 # Обновление тестового сообщения с текущим временем
-test_message = f"Это тестовое сообщение с компа. Время отправки: {current_time_str}"
+test_message = f"Это тестовое сообщение. Время отправки: {current_time_str}"
 create_test_file()
 send_telegram_message(test_message)
 
