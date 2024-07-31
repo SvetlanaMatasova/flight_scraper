@@ -49,18 +49,66 @@ def write_to_file(filename, data):
         logging.error(f'File write error: {e}')
 
 # Старая версия сайта
+# def collect_flight_data_old(driver):
+#     flight_data = []
+#     time.sleep(4)
+#     # Собираем данные о рейсах
+#     flights = driver.find_elements(By.CSS_SELECTOR, "span[data-v-tippy] div.flight-date-selector__item")
+#     for flight in flights:
+#         date_element = flight.find_element(By.CSS_SELECTOR, "div.flight-date-selector__date")
+#         price_element = flight.find_element(By.CSS_SELECTOR, "div.flight-date-selector__price")
+#         date = date_element.text
+#         price = price_element.text
+#         flight_data.append((date, price))
+#     return flight_data
+#
+# def scrape_flight_data_old(driver):
+#     wait = WebDriverWait(driver, 10)
+#     all_flight_data = []
+#
+#     # Собираем данные и обновляем их 8 раз
+#     for _ in range(8):
+#         # Собираем данные о текущих рейсах
+#         flight_data = collect_flight_data_old(driver)
+#         all_flight_data.extend(flight_data)
+#
+#         # Нажимаем кнопку слайдера для загрузки новых данных
+#         slider_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div.flight-date-selector__next")))
+#         slider_button.click()
+#
+#         # Ждем, пока страница полностью загрузится после обновления
+#         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "span[data-v-tippy] div.flight-date-selector__item")))
+#
+#     return all_flight_data
+
+def process_price(price_text):
+    try:
+        # Удаляем символы '₽' и пробелы, оставляем только цифры и точки
+        clean_price = ''.join(char for char in price_text if char.isdigit() or char == '.')
+        return float(clean_price) if clean_price else 0
+    except ValueError:
+        return 0
+
+
 def collect_flight_data_old(driver):
     flight_data = []
     time.sleep(4)
+
     # Собираем данные о рейсах
     flights = driver.find_elements(By.CSS_SELECTOR, "span[data-v-tippy] div.flight-date-selector__item")
     for flight in flights:
         date_element = flight.find_element(By.CSS_SELECTOR, "div.flight-date-selector__date")
         price_element = flight.find_element(By.CSS_SELECTOR, "div.flight-date-selector__price")
-        date = date_element.text
-        price = price_element.text
-        flight_data.append((date, price))
+        date = date_element.text.strip()
+        price_text = price_element.text.strip()
+
+        # Обработка цены и фильтрация записей без рейсов
+        price = process_price(price_text)
+        if price > 0:
+            flight_data.append((date, price))
+
     return flight_data
+
 
 def scrape_flight_data_old(driver):
     wait = WebDriverWait(driver, 10)
@@ -77,9 +125,11 @@ def scrape_flight_data_old(driver):
         slider_button.click()
 
         # Ждем, пока страница полностью загрузится после обновления
-        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "span[data-v-tippy] div.flight-date-selector__item")))
+        wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "span[data-v-tippy] div.flight-date-selector__item")))
 
     return all_flight_data
+
 
 # Новая версия сайта
 def collect_flight_data_new(driver):
