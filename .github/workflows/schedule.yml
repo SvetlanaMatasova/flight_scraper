@@ -27,8 +27,9 @@ jobs:
       run: |
         python main.py
 
- - name: Check created files
-  run: |
-    echo "Checking for files"
-    ls -al
-    cat test_file.txt || echo "Test file not found"
+    - name: Check created files
+      run: |
+        echo "Checking for files"
+        ls -al
+        cat test_file.txt || echo "Test file not found"
+
