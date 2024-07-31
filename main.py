@@ -109,7 +109,7 @@ def process_price(price_text):
 
 def collect_flight_data_old(driver):
     flight_data = []
-    time.sleep(12)
+    time.sleep(15)
 
     # Собираем данные о рейсах
     flights = driver.find_elements(By.CSS_SELECTOR, "span[data-v-tippy] div.flight-date-selector__item")
@@ -152,7 +152,7 @@ def scrape_flight_data_old(driver):
 def collect_flight_data_new(driver):
     flight_data = []
     try:
-        time.sleep(12)  # Дождитесь, пока элементы загрузятся
+        time.sleep(15)  # Дождитесь, пока элементы загрузятся
 
         # Ожидаем видимости элементов с датами
         WebDriverWait(driver, 10).until(
@@ -202,7 +202,7 @@ def click_next_button(driver):
             EC.element_to_be_clickable((By.CSS_SELECTOR, "div.matrix-date-selector__next"))
         )
         next_button.click()
-        time.sleep(12)  # Дождитесь, пока загрузится следующая страница
+        time.sleep(15)  # Дождитесь, пока загрузится следующая страница
     except Exception as e:
         logging.error(f'Error clicking next button: {e}')
 
@@ -230,7 +230,7 @@ def scrape_flight_data(url):
     WebDriverWait(driver, 8).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "body"))
     )
-    time.sleep(12)
+    time.sleep(15)
     # Проверяем наличие элемента для определения версии сайта
     try:
         if driver.find_elements(By.CSS_SELECTOR, "div.flight-date-selector__date"):
