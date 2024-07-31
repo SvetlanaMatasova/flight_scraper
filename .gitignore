@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+*.db
+*.DS_Store
+.venv/
+.vscode/
+.idea/
+.env
+flight_prices.txt
