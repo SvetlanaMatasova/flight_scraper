@@ -322,6 +322,8 @@
 #     # chat_id = '1480863151'
 
 import logging
+import os
+
 import requests
 import time
 
@@ -356,9 +358,11 @@ def send_telegram_message(message):
         logging.error(f"Исключение при отправке сообщения: {e}")
 
 def create_test_file():
-    file_path = 'test_file.txt'
+    file_path = os.path.join(os.getcwd(), 'test_file.txt')  # Путь к файлу
+    print(f'Creating file at: {file_path}')  # Отладочный вывод
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write('This is a test file created by GitHub Actions\n')
+       
 
 
 
