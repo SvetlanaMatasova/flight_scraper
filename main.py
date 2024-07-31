@@ -109,7 +109,7 @@ def process_price(price_text):
 
 def collect_flight_data_old(driver):
     flight_data = []
-    time.sleep(20)
+    time.sleep(8)
 
     # Собираем данные о рейсах
     flights = driver.find_elements(By.CSS_SELECTOR, "span[data-v-tippy] div.flight-date-selector__item")
@@ -152,7 +152,7 @@ def scrape_flight_data_old(driver):
 def collect_flight_data_new(driver):
     flight_data = []
     try:
-        time.sleep(20)  # Дождитесь, пока элементы загрузятся
+        time.sleep(8)  # Дождитесь, пока элементы загрузятся
 
         # Ожидаем видимости элементов с датами
         WebDriverWait(driver, 10).until(
@@ -202,7 +202,7 @@ def click_next_button(driver):
             EC.element_to_be_clickable((By.CSS_SELECTOR, "div.matrix-date-selector__next"))
         )
         next_button.click()
-        time.sleep(20)  # Дождитесь, пока загрузится следующая страница
+        time.sleep(8)  # Дождитесь, пока загрузится следующая страница
     except Exception as e:
         logging.error(f'Error clicking next button: {e}')
 
@@ -230,7 +230,7 @@ def scrape_flight_data(url):
     WebDriverWait(driver, 8).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "body"))
     )
-    time.sleep(20)
+    time.sleep(8)
     # Проверяем наличие элемента для определения версии сайта
     try:
         if driver.find_elements(By.CSS_SELECTOR, "div.flight-date-selector__date"):
@@ -292,21 +292,22 @@ try:
     for data in lowest_prices:
         print(f"{data[0]} - {data[1]}")
 
-    if filtered_flight_data:
-        min_price = min(float(flight[1].replace(' ', '')) for flight in filtered_flight_data)
-
-        # Найти все рейсы с минимальной ценой
-        lowest_price_flights = [flight for flight in filtered_flight_data if
-                                float(flight[1].replace(' ', '')) == min_price]
-
-        # Формируем сообщение для отправки
-        if lowest_prices and float(lowest_prices[0][1].replace(' ', '')) < 50000:
-            message = "Рейсы с самой низкой ценой Тель-Авив - Сочи:\n"
-            for flight in lowest_price_flights:
-                message += f"{flight[0]} - {flight[1]}\n"
-            print(message)
-            send_telegram_message(message)
-
+    # if filtered_flight_data:
+    #     min_price = min(float(flight[1].replace(' ', '')) for flight in filtered_flight_data)
+    #
+    #     # Найти все рейсы с минимальной ценой
+    #     lowest_price_flights = [flight for flight in filtered_flight_data if
+    #                             float(flight[1].replace(' ', '')) == min_price]
+    #
+    #     # Формируем сообщение для отправки
+    #     if lowest_prices and float(lowest_prices[0][1].replace(' ', '')) < 50000:
+    #         message = "Рейсы с самой низкой ценой Тель-Авив - Сочи:\n"
+    #         for flight in lowest_price_flights:
+    #             message += f"{flight[0]} - {flight[1]}\n"
+    #         print(message)
+    #         send_telegram_message(message)
+    message = "Test"
+    send_telegram_message(message)
     logging.info('Finished script')
 
 except Exception as e:
