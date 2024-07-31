@@ -354,6 +354,12 @@ def send_telegram_message(message):
     except Exception as e:
         logging.error(f"Исключение при отправке сообщения: {e}")
 
+try:
+    with open('script_log.txt', 'a') as f:
+        f.write('Проверка прав на запись\n')
+    print('Права на запись есть.')
+except IOError as e:
+    print(f'Ошибка при записи в файл: {e}')
 
 # Отправка тестового сообщения
 test_message = "Это тестовое сообщение."
