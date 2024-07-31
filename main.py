@@ -16,6 +16,11 @@ import time
 # log_file_path = os.path.join(base_dir, 'script_log.txt')
 # data_file_path = os.path.join(base_dir, 'flight_prices.txt')
 
+
+
+
+
+
 # Определите относительные пути к файлам
 base_dir = os.path.dirname(os.path.abspath(__file__))  # Получает директорию текущего файла
 log_file_path = os.path.join(base_dir, 'script_log.txt')
@@ -57,6 +62,8 @@ def write_to_file(filename, data):
             file.write(data)
     except IOError as e:
         logging.error(f'File write error: {e}')
+
+
 
 # Старая версия сайта
 # def collect_flight_data_old(driver):
@@ -255,7 +262,7 @@ try:
     # Формируем URL с текущей датой
     url_template = 'https://booking.azimuth.ru/new/#/!/TLV/AER/{}/1-1-0/'
     url = url_template.format(current_date)
-   
+
     flight_data = scrape_flight_data(url)
 
     # Вывод всех считанных данных в консоль
