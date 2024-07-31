@@ -233,7 +233,7 @@ try:
                                 float(flight[1].replace(' ', '')) == min_price]
 
         # Формируем сообщение для отправки
-        if lowest_prices and float(lowest_prices[0][1].replace(' ', '')) < 25000:
+        if lowest_prices and float(lowest_prices[0][1].replace(' ', '')) < 50000:
             message = "Рейсы с самой низкой ценой Тель-Авив - Сочи:\n"
             for flight in lowest_price_flights:
                 message += f"{flight[0]} - {flight[1]}\n"
