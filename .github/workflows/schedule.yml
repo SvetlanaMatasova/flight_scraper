@@ -22,6 +22,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Check Chrome version
+      run: google-chrome --version
+
+    - name: Check ChromeDriver version
+      run: chromedriver --version
+
     - name: Run Python script
       run: |
         python main.py
