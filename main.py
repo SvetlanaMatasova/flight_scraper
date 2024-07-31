@@ -12,12 +12,22 @@ import time
 
 
 # Определите абсолютные пути к файлам
-base_dir = r'C:\Users\Светлана\PycharmProjects\parser'
+# base_dir = r'C:\Users\Светлана\PycharmProjects\parser'
+# log_file_path = os.path.join(base_dir, 'script_log.txt')
+# data_file_path = os.path.join(base_dir, 'flight_prices.txt')
+
+# Определите относительные пути к файлам
+base_dir = os.path.dirname(os.path.abspath(__file__))  # Получает директорию текущего файла
 log_file_path = os.path.join(base_dir, 'script_log.txt')
 data_file_path = os.path.join(base_dir, 'flight_prices.txt')
+# Убедитесь, что директория существует
+if not os.path.exists(base_dir):
+    os.makedirs(base_dir)
 
 # Настройка логирования
 logging.basicConfig(filename=log_file_path, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+# # Настройка логирования
+# logging.basicConfig(filename=log_file_path, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def send_telegram_message(message):
@@ -245,7 +255,7 @@ try:
     # Формируем URL с текущей датой
     url_template = 'https://booking.azimuth.ru/new/#/!/TLV/AER/{}/1-1-0/'
     url = url_template.format(current_date)
-    # url = 'https://booking.azimuth.ru/new/#/!/TLV/AER/28.07.2024/1-1-0/'
+   
     flight_data = scrape_flight_data(url)
 
     # Вывод всех считанных данных в консоль
