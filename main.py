@@ -323,6 +323,7 @@
 
 import logging
 import requests
+import time
 
 # Настройка логирования
 log_file_path = "script_log.txt"
@@ -361,8 +362,15 @@ try:
 except IOError as e:
     print(f'Ошибка при записи в файл: {e}')
 
-# Отправка тестового сообщения
-test_message = "Это тестовое сообщение."
+
+
+
+# Получение текущего времени
+current_time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+
+# Обновление тестового сообщения с текущим временем
+test_message = f"Это тестовое сообщение. Время отправки: {current_time_str}"
+
 send_telegram_message(test_message)
 
 # https://github.com/SvetlanaMatasova/flight_scraper.git
